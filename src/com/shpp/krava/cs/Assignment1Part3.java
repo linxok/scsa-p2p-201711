@@ -31,45 +31,47 @@ public class Assignment1Part3 extends KarelTheRobot {
 
     public void run() throws Exception {
 
-      roadOfBeeper();
-      removeBeepers();
+        roadOfBeeper();
+        removeBeepers();
 
     }
-/*
-set Beepers in line
- */
+
+    /*
+    set Beepers in line
+     */
     private void roadOfBeeper() throws Exception {
-        while (frontIsClear()){
-            if (noBeepersPresent()){
+        while (frontIsClear()) {
+            if (noBeepersPresent()) {
 
                 putBeeper();
             }
             move();
         }
-        if (noBeepersPresent()){
+        if (noBeepersPresent()) {
 
             putBeeper();
         }
     }
-/*
 
- */
+    /*
+
+     */
     private void removeBeepers() throws Exception {
 
         firstAndLastBeeperPick();
         nextBeeperPick();
 
 
-
     }
-/*
-find firs and last Beepers and pick it
- */
+
+    /*
+    find firs and last Beepers and pick it
+     */
     private void firstAndLastBeeperPick() throws Exception {
 
-        for (int i =0; i<2; i++){
+        for (int i = 0; i < 2; i++) {
             turnAround();
-            while (frontIsClear()){
+            while (frontIsClear()) {
                 move();
             }
             pickBeeper();
@@ -79,22 +81,23 @@ find firs and last Beepers and pick it
 
     private void nextBeeperPick() throws Exception {
         turnAround();
-        while (noBeepersPresent()){
+        while (noBeepersPresent()) {
             beeperPicker();
         }
 
     }
-/*
-move from line Beepers, find last and pick him, if Beeper cancel then put Beeper.
- */
+
+    /*
+    move from line Beepers, find last and pick him, if Beeper cancel then put Beeper.
+     */
     private void beeperPicker() throws Exception {
         move();
-        while (beepersPresent()){
+        while (beepersPresent()) {
             move();
         }
         turnAround();
         move();
-        if (beepersPresent()){
+        if (beepersPresent()) {
             pickBeeper();
         } else {
             putBeeper();
