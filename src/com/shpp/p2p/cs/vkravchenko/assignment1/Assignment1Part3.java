@@ -22,7 +22,7 @@
  */
 
 
-package com.shpp.p2p.cs.vkravchenko;
+package com.shpp.p2p.cs.vkravchenko.assignment1;
 
 import com.shpp.karel.KarelTheRobot;
 

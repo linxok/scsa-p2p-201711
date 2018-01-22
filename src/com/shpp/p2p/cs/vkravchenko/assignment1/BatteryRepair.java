@@ -14,95 +14,74 @@
  */
 
 
-package com.shpp.p2p.cs.vkravchenko;
+package com.shpp.p2p.cs.vkravchenko.assignment1;
 
 import com.shpp.karel.KarelTheRobot;
 
-public class Assignment1Part4 extends KarelTheRobot {
+public class BatteryRepair extends KarelTheRobot {
 
 // main run
 
     public void run() throws Exception {
 
-        buildChesLair();
+        while (frontIsClear()){
 
-    }
+            cheekAndRepair();
 
-    //  checks for the last line and starts the process of filling the line and switching to a new one
-    private void buildChesLair() throws Exception {
-
-        turnNorth();
-        do {
-
-            pickLineBeeper();
-            turnNextLine();
         }
-        while (frontIsClear());
+        cheekAndRepair();
+        turnRight();
+        move();
+        turnLeft();
 
     }
 
-    //  fills the current line Beepers
-    private void pickLineBeeper() throws Exception {
-        turnLine();
-
-        while (frontIsClear()) {
-            if (beepersPresent()) {
-                move();
-                if (frontIsClear()) {
-                    move();
-                    putBeeper();
-                }
-            } else {
-                putBeeper();
-                move();
-                if (frontIsClear()) {
-                    move();
-                    putBeeper();
-                }
-            }
-        }
-
-
-    }
-
-    //  moves to a new line by setting the starting position Karel and Beeper
-    private void turnNextLine() throws Exception {
-        turnNorth();
+    private void runInLine() throws Exception {
         if (frontIsClear()) {
+           move();
+        }
+    }
 
-            if (beepersPresent()) {
-                move();
-                turnLine();
-                move();
-            } else {
+    private void beckToLine() throws Exception {
+        turnRight();
+        move();
+        turnLeft();
+    }
 
+    private void cheekAndRepair() throws Exception {
+        if (noBeepersPresent()){
+            if (rightIsClear()) {
+
+                turnRight();
                 move();
-                putBeeper();
-                turnLine();
+                repairBlock();
+                turnAround();
+                move();
+                move();
+                repairBlock();
+                turnRight();
+                beckToLine();
             }
 
         }
-
+        runInLine();
     }
 
-    //  determines the initial direction of motion
-    private void turnLine() throws Exception {
-        turnNorth();
-        if (leftIsBlocked()) {
-            turnRight();
-        } else turnLeft();
+    private void turnAround() throws Exception {
+        turnLeft();
+        turnLeft();
+    }
+
+    private void repairBlock() throws Exception {
+        while (beepersPresent()){
+            pickBeeper();
+        }
     }
 
     private void turnRight() throws Exception {
         turnLeft();
         turnLeft();
         turnLeft();
-    }
-
-    private void turnNorth() throws Exception {
-        while (notFacingNorth()) {
-            turnLeft();
-        }
     }
 
 }
