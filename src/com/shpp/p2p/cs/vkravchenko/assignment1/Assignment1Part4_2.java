@@ -18,7 +18,7 @@ package com.shpp.p2p.cs.vkravchenko.assignment1;
 
 import com.shpp.karel.KarelTheRobot;
 
-public class Assignment1Part4 extends KarelTheRobot {
+public class Assignment1Part4_2 extends KarelTheRobot {
     // Precondition: Karel stands on the first street and
     //               the first avenue looking east.
     // Postcondition: Karel created a chessboard and stands
@@ -26,68 +26,89 @@ public class Assignment1Part4 extends KarelTheRobot {
     //                looking east.
 
     public void run() throws Exception {
-        while (leftIsClear()){
-            putBeeperInLine();
-            moveBeck();
-            nextLine();
+
+        buildChesLair();
+    }
+
+    //  checks for the last line and starts the process of filling the line and switching to a new one
+    private void buildChesLair() throws Exception {
+
+        turnNorth();
+        do {
+
+            pickLineBeeper();
+            turnNextLine();
         }
-        putBeeperInLine();
+        while (frontIsClear());
 
     }
 
-    private void nextLine() throws Exception {
-        turnRight();
-        if (beepersPresent()){
-            moveIfClean();
-            turnRight();
-            moveIfClean();
-        } else {
-            moveIfClean();
-            putBeeper();
-            turnRight();
-        }
-    }
+    //  fills the current line Beepers
+    private void pickLineBeeper() throws Exception {
+        turnLine();
 
-    private void moveBeck() throws Exception {
-        turnAround();
-        while (frontIsClear()){
-            move();
-        }
-    }
-
-    private void putBeeperInLine() throws Exception {
-
-        while (frontIsClear()){
-            if (beepersPresent()){
+        while (frontIsClear()) {
+            if (beepersPresent()) {
                 moveIfClean();
-                moveIfClean();
-//                putBeeper();
-
+                if (frontIsClear()) {
+                    moveIfClean();
+                    putBeeper();
+                }
             } else {
                 putBeeper();
                 moveIfClean();
-                moveIfClean();
-                putBeeper();
-
+                if (frontIsClear()) {
+                    moveIfClean();
+                    putBeeper();
+                }
             }
         }
     }
 
-    private void moveIfClean() throws Exception {
-        if (frontIsClear())
-            move();
-    }
+    //  moves to a new line by setting the starting position Karel and Beeper
 
+    private void turnNextLine() throws Exception {
+        turnNorth();
+        if (frontIsClear()) {
+
+            if (beepersPresent()) {
+                moveIfClean();
+                turnLine();
+                moveIfClean();
+            } else {
+
+                moveIfClean();
+                putBeeper();
+                turnLine();
+            }
+        }
+    }
+    //  determines the initial direction of motion
+
+    private void turnLine() throws Exception {
+        turnNorth();
+        if (rightIsClear()) {
+            turnRight();
+        } else if (leftIsClear()) {
+            turnLeft();
+        }
+
+    }
     private void turnRight() throws Exception {
         turnLeft();
         turnLeft();
         turnLeft();
     }
 
-    private void turnAround() throws Exception {
-        turnLeft();
-        turnLeft();
+    private void turnNorth() throws Exception {
+        while (notFacingNorth()) {
+            turnLeft();
+        }
+    }
 
+
+    private void moveIfClean() throws Exception {
+        if (frontIsClear())
+            move();
     }
 }
-

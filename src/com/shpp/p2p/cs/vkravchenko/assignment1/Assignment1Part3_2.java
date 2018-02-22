@@ -21,51 +21,95 @@
  * Интересный момент задачи: существует дофигища алгоритмов решения этой проблемы, так что советуем вам быть изобретательными и получать удовольствие!
  */
 
+
 package com.shpp.p2p.cs.vkravchenko.assignment1;
 
 import com.shpp.karel.KarelTheRobot;
+
 
 // Precondition: Karel begins in the south-west corner
 //               and looks to the east.
 // Postcondition: Karel put a single beeper in the center of the southern street,
 //                took one step forward and looks to the west.
 
-public class Assignment1Part3 extends KarelTheRobot {
+public class Assignment1Part3_2 extends KarelTheRobot {
+
 
     public void run() throws Exception {
 
-        recursionFindCenter();          // recursion method
-        putBeeper();                    // end step put beeper
+        roadOfBeeper();
+        removeBeepers();
+
     }
 
-    // Precondition: Karel stands in the south-west corner
-    //               of the street and looks to the east.
-    // Postcondition: Karel stands in the center of the street.
-    // We use recursion for this method.
-    // The condition for the end of recursion: changing true
-    // to false in the "if" condition.
-    private void recursionFindCenter() throws Exception {
-        if (frontIsClear())             //
-            if (facingEast()) {         // while Karol face lock in East and front clean
+    /*
+    set Beepers in line
+     */
+    private void roadOfBeeper() throws Exception {
+        while (frontIsClear()) {
+            if (noBeepersPresent()) {
 
-                moveIfClean();          // It is necessary to make exactly half of
-                moveIfClean();          // the displacement when you leave the recursion
-                if (frontIsBlocked()) {
-                    turnAround();       // turn around in the end line
-                }
-
-                recursionFindCenter();  // recursion
-                moveIfClean();          // After the recursion, make exactly half the displacement
+                putBeeper();
             }
-    }
-
-    //    move if front is clean
-    private void moveIfClean() throws Exception {
-        if (frontIsClear())
             move();
+        }
+        if (noBeepersPresent()) {
+
+            putBeeper();
+        }
     }
 
-    //  turn Karel around
+    /*
+
+     */
+    private void removeBeepers() throws Exception {
+
+        firstAndLastBeeperPick();
+        nextBeeperPick();
+
+
+    }
+
+    /*
+    find firs and last Beepers and pick it
+     */
+    private void firstAndLastBeeperPick() throws Exception {
+
+        for (int i = 0; i < 2; i++) {
+            turnAround();
+            while (frontIsClear()) {
+                move();
+            }
+            pickBeeper();
+
+        }
+    }
+
+    private void nextBeeperPick() throws Exception {
+        turnAround();
+        while (noBeepersPresent()) {
+            beeperPicker();
+        }
+
+    }
+
+    /*
+    move from line Beepers, find last and pick him, if Beeper cancel then put Beeper.
+     */
+    private void beeperPicker() throws Exception {
+        move();
+        while (beepersPresent()) {
+            move();
+        }
+        turnAround();
+        move();
+        if (beepersPresent()) {
+            pickBeeper();
+        } else {
+            putBeeper();
+        }
+    }
+
     private void turnAround() throws Exception {
         turnLeft();
         turnLeft();

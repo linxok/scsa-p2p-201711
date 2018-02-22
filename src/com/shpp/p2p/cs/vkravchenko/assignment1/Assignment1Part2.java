@@ -27,10 +27,11 @@ import com.shpp.karel.KarelTheRobot;
 
 public class Assignment1Part2 extends KarelTheRobot {
 
+    // Precondition: Karel stands on the first street and the
+    //               first avenue facing east.
+    // Postcondition: Karel has repaired the columns and stands
+    //                at the bottom of the last column looking east.
 
-    /*
-    move and build column while not end level.
-     */
     public void run() throws Exception {
 
         do {
@@ -82,8 +83,6 @@ public class Assignment1Part2 extends KarelTheRobot {
     /*
     move in the column and put beeper if it no present
      */
-
-
     private void buildColumn() throws Exception {
 
         turnLeft();
@@ -94,7 +93,8 @@ public class Assignment1Part2 extends KarelTheRobot {
         ifNoBeepersPutInThis();
 
     }
-
+    /*if beeper not present put it this
+    * */
     private void ifNoBeepersPutInThis() throws Exception {
         if (noBeepersPresent())
             putBeeper();

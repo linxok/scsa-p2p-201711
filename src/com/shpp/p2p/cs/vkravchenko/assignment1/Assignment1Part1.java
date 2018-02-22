@@ -30,6 +30,11 @@ package com.shpp.p2p.cs.vkravchenko.assignment1;
 
 import com.shpp.karel.KarelTheRobot;
 
+// Precondition: Karel stands in the north-western
+//               corner of the room and looks to the east.
+// Postcondition: Karel took the newspaper and stands in the north-western
+//                corner of the room and looks to the east.
+
 public class Assignment1Part1 extends KarelTheRobot {
 
     /*
